@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: golden-path
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/REPLACE_OWNER/platform-golden-path.git
+    targetRevision: main
+    path: deploy
+    directory:
+      include: kubernetes.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: golden-path
+  syncPolicy:
+    syncOptions: [CreateNamespace=true]
